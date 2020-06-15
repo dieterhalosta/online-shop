@@ -1,0 +1,6 @@
+spring:
+  datasource:
+#    use a local server for QA Team
+    url: jdbc:mysql://192.168.1.2:3306/online-shop?serverTimezone=UTC
+    username: online-shop
+    password: asdascaca@€2324()weq3
