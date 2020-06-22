@@ -1,12 +1,15 @@
 package org.fastttrackit.onlineshop.service;
 
 import org.fastttrackit.onlineshop.domain.Product;
+import org.fastttrackit.onlineshop.exception.ResourceNotFoundException;
 import org.fastttrackit.onlineshop.persistance.ProductRepository;
 import org.fastttrackit.onlineshop.transfer.SaveProductRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 // Spring Bean (services, repositories, etc)
 @Service
@@ -33,6 +36,24 @@ public class ProductService {
         product.setImageUrl(request.getImageUrl());
 
         return productRepository.save(product);
+
+    }
+
+    public Product getProduct(long id){
+        LOGGER.info("Retrieving product {}", id);
+
+
+//        Optional<Product> productOptional = productRepository.findById(id);
+//
+//        if (productOptional.isPresent()){
+//            return productOptional.get();
+//        } else {
+//            throw new ResourceNotFoundException("Product " + id + " not found.");
+//        }
+
+        return productRepository.findById(id)
+                //Lambda expression
+                .orElseThrow(() -> new ResourceNotFoundException("Product " + id + " not found."));
 
     }
 }
