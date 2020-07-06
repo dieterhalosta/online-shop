@@ -3,18 +3,22 @@ package org.fastttrackit.onlineshop;
 import org.fastttrackit.onlineshop.domain.Product;
 import org.fastttrackit.onlineshop.exception.ResourceNotFoundException;
 import org.fastttrackit.onlineshop.service.ProductService;
+import org.fastttrackit.onlineshop.transfer.GetProductsRequest;
 import org.fastttrackit.onlineshop.transfer.SaveProductRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import javax.validation.ConstraintViolationException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
 class ProductServiceIntegrationTests {
@@ -61,6 +65,18 @@ class ProductServiceIntegrationTests {
     void getProduct_whenNonExistingProduct_thenThrowResourceNotFoundException(){
         Assertions.assertThrows(ResourceNotFoundException.class,
                 () -> productService.getProduct(0));
+    }
+
+    @Test
+    void getProducts_whenOneExistingProduct_thenReturnPageOfOneProduct(){
+        Product product = createProduct();
+
+        Page<Product> productsPage = productService.getproducts(new GetProductsRequest(), PageRequest.of(0, 1000));
+
+        assertThat(productsPage, notNullValue());
+        assertThat(productsPage.getTotalElements(), greaterThanOrEqualTo(1L));
+        assertThat(productsPage.getContent(), contains(product));
+
     }
 
     @Test

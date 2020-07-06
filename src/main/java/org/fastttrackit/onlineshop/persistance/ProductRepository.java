@@ -13,6 +13,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product>findByNameContainingAndQuantityGreaterThanEqual(String partialName, int minimumQuantity, Pageable pageable);
 
     //JPQL syntax
-    @Query(value = "SELECT product FROM Product product WHERE (:partialName IS null OR product.name = :partialName) AND (:minimumQuantity IS null OR product.quantity >= :minimumQuantity)")
+    @Query(value = "SELECT product FROM Product product WHERE (:partialName IS null OR product.name LIKE %:partialName%) AND (:minimumQuantity IS null OR product.quantity >= :minimumQuantity)")
     Page<Product> findByOptionalCriteria(String partialName, Integer minimumQuantity, Pageable pageable);
 }

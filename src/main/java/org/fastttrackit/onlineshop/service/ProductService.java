@@ -63,13 +63,15 @@ public class ProductService {
 
     public Page<Product> getproducts(GetProductsRequest request, Pageable pageable) {
 
-        if(request.getPartialName() != null && request.getMinimumQuantity() != null) {
-            return productRepository.findByNameContainingAndQuantityGreaterThanEqual(request.getPartialName(), request.getMinimumQuantity(), pageable);
-        } else if (request.getPartialName() != null) {
-            return productRepository.findByNameContaining(request.getPartialName(), pageable);
-        } else {
-            return productRepository.findAll(pageable);
-        }
+//        if(request.getPartialName() != null && request.getMinimumQuantity() != null) {
+//            return productRepository.findByNameContainingAndQuantityGreaterThanEqual(request.getPartialName(), request.getMinimumQuantity(), pageable);
+//        } else if (request.getPartialName() != null) {
+//            return productRepository.findByNameContaining(request.getPartialName(), pageable);
+//        } else {
+//            return productRepository.findAll(pageable);
+//        }
+
+        return productRepository.findByOptionalCriteria(request.getPartialName(), request.getMinimumQuantity(), pageable);
 
     }
 
