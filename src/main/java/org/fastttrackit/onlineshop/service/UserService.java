@@ -1,11 +1,9 @@
 package org.fastttrackit.onlineshop.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.fastttrackit.onlineshop.domain.Product;
 import org.fastttrackit.onlineshop.domain.User;
 import org.fastttrackit.onlineshop.exception.ResourceNotFoundException;
 import org.fastttrackit.onlineshop.persistance.UserRepository;
-import org.fastttrackit.onlineshop.transfer.GetProductsRequest;
 import org.fastttrackit.onlineshop.transfer.user.CreateUserRequest;
 import org.fastttrackit.onlineshop.transfer.user.GetUsersRequest;
 import org.slf4j.Logger;
@@ -32,7 +30,7 @@ public class UserService {
     }
 
     public User createUser(CreateUserRequest request){
-        LOGGER.info("Creating product {}", request);
+        LOGGER.info("Creating user {}", request);
 
         User user = objectMapper.convertValue(request, User.class);
 
