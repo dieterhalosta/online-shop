@@ -3,8 +3,8 @@ package org.fastttrackit.onlineshop.service;
 import org.fastttrackit.onlineshop.domain.Product;
 import org.fastttrackit.onlineshop.exception.ResourceNotFoundException;
 import org.fastttrackit.onlineshop.persistance.ProductRepository;
-import org.fastttrackit.onlineshop.transfer.GetProductsRequest;
-import org.fastttrackit.onlineshop.transfer.SaveProductRequest;
+import org.fastttrackit.onlineshop.transfer.product.GetProductsRequest;
+import org.fastttrackit.onlineshop.transfer.product.SaveProductRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 // Spring Bean (services, repositories, etc)
 @Service

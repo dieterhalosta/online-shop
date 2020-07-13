@@ -3,15 +3,14 @@ package org.fastttrackit.onlineshop;
 import org.fastttrackit.onlineshop.domain.Product;
 import org.fastttrackit.onlineshop.exception.ResourceNotFoundException;
 import org.fastttrackit.onlineshop.service.ProductService;
-import org.fastttrackit.onlineshop.transfer.GetProductsRequest;
-import org.fastttrackit.onlineshop.transfer.SaveProductRequest;
+import org.fastttrackit.onlineshop.transfer.product.GetProductsRequest;
+import org.fastttrackit.onlineshop.transfer.product.SaveProductRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 
 import javax.validation.ConstraintViolationException;
 

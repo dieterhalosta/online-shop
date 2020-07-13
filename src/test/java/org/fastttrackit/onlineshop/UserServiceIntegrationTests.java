@@ -1,11 +1,10 @@
 package org.fastttrackit.onlineshop;
 
-import org.fastttrackit.onlineshop.domain.Product;
 import org.fastttrackit.onlineshop.domain.User;
 import org.fastttrackit.onlineshop.domain.UserRole;
 import org.fastttrackit.onlineshop.exception.ResourceNotFoundException;
 import org.fastttrackit.onlineshop.service.UserService;
-import org.fastttrackit.onlineshop.transfer.GetProductsRequest;
+import org.fastttrackit.onlineshop.steps.UserTestSteps;
 import org.fastttrackit.onlineshop.transfer.user.CreateUserRequest;
 import org.fastttrackit.onlineshop.transfer.user.GetUsersRequest;
 import org.hamcrest.CoreMatchers;
@@ -28,14 +27,17 @@ public class UserServiceIntegrationTests {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserTestSteps userTestSteps;
+
     @Test
     public void createUser_whenValidRequest_thenReturnCreatedUser(){
-        createUser();
+        userTestSteps.createUser();
     }
 
     @Test
     public void getUser_whenExistingUser_thenReturnUser(){
-        User user = createUser();
+        User user =  userTestSteps.createUser();
 
         User userResponse = userService.getUser(user.getId());
 
@@ -48,7 +50,7 @@ public class UserServiceIntegrationTests {
 
     @Test
     void getUsers_whenOneExistingUser_thenReturnPageOfOneUser(){
-        User user = createUser();
+        User user =  userTestSteps.createUser();
 
         Page<User> usersPage = userService.getUsers(new GetUsersRequest(), PageRequest.of(0, 1000));
 
@@ -60,7 +62,7 @@ public class UserServiceIntegrationTests {
 
     @Test
     public void updateUser_whenExistingUser_thenReturnUpdatedUser(){
-        User user = createUser();
+        User user =  userTestSteps.createUser();
         CreateUserRequest request = new CreateUserRequest();
         request.setRole(UserRole.CUSTOMER);
         request.setFirstName("Test from Test");
@@ -77,7 +79,7 @@ public class UserServiceIntegrationTests {
 
     @Test
     void deleteProduct_whenExistingRequest_thenProductDoesNotExistAnymore(){
-        User user = createUser();
+        User user =  userTestSteps.createUser();
 
         userService.deleteUser(user.getId());
 
@@ -85,21 +87,6 @@ public class UserServiceIntegrationTests {
                 () -> userService.getUser(user.getId()));
     }
 
-    private User createUser() {
-        CreateUserRequest request = new CreateUserRequest();
-        request.setRole(UserRole.CUSTOMER);
-        request.setFirstName("Test First Name");
-        request.setLastName("Test Last Name");
 
-        User user = userService.createUser(request);
-
-        assertThat(user, notNullValue());
-        assertThat(user.getId(), greaterThan(0L));
-        assertThat(user.getRole(), is(request.getRole().name()));
-        assertThat(user.getFirstName(), is(request.getFirstName()));
-        assertThat(user.getLastName(), is(request.getLastName()));
-
-        return user;
-    }
 
 }

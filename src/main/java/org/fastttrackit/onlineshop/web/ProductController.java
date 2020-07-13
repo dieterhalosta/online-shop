@@ -3,8 +3,8 @@ package org.fastttrackit.onlineshop.web;
 
 import org.fastttrackit.onlineshop.domain.Product;
 import org.fastttrackit.onlineshop.service.ProductService;
-import org.fastttrackit.onlineshop.transfer.GetProductsRequest;
-import org.fastttrackit.onlineshop.transfer.SaveProductRequest;
+import org.fastttrackit.onlineshop.transfer.product.GetProductsRequest;
+import org.fastttrackit.onlineshop.transfer.product.SaveProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
