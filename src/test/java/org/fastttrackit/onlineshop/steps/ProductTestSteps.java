@@ -2,6 +2,7 @@ package org.fastttrackit.onlineshop.steps;
 
 import org.fastttrackit.onlineshop.domain.Product;
 import org.fastttrackit.onlineshop.service.ProductService;
+import org.fastttrackit.onlineshop.transfer.product.ProductResponse;
 import org.fastttrackit.onlineshop.transfer.product.SaveProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,14 +18,14 @@ public class ProductTestSteps {
     @Autowired
     private ProductService productService;
 
-    public Product createProduct() {
+    public ProductResponse createProduct() {
         SaveProductRequest request = new SaveProductRequest();
         request.setName("Phone");
         request.setPrice(500);
         request.setQuantity(1000);
 
 
-        Product product = productService.createProduct(request);
+        ProductResponse product = productService.createProduct(request);
 
         //assertions
         assertThat(product, notNullValue());

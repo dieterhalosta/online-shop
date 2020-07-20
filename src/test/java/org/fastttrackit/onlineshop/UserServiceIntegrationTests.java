@@ -72,7 +72,7 @@ public class UserServiceIntegrationTests {
 
         assertThat(updatedUser, CoreMatchers.notNullValue());
         assertThat(updatedUser.getId(), is(user.getId()));
-        assertThat(updatedUser.getRole(), is(request.getRole().name()));
+        assertThat(updatedUser.getRole().name(), is(request.getRole().name()));
         assertThat(updatedUser.getFirstName(), is(request.getFirstName()));
         assertThat(updatedUser.getLastName(), is(request.getLastName()));
     }

@@ -4,6 +4,7 @@ package org.fastttrackit.onlineshop.web;
 import org.fastttrackit.onlineshop.domain.Product;
 import org.fastttrackit.onlineshop.service.ProductService;
 import org.fastttrackit.onlineshop.transfer.product.GetProductsRequest;
+import org.fastttrackit.onlineshop.transfer.product.ProductResponse;
 import org.fastttrackit.onlineshop.transfer.product.SaveProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,32 +28,32 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@Valid @RequestBody SaveProductRequest request){
-        Product product = productService.createProduct(request);
+    public ResponseEntity<ProductResponse> createProduct(@Valid @RequestBody SaveProductRequest request){
+        ProductResponse product = productService.createProduct(request);
 
 
         return new ResponseEntity<>(product, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable long id, @Valid @RequestBody SaveProductRequest request){
-        Product product = productService.updateProduct(id, request);
+    public ResponseEntity<ProductResponse> updateProduct(@PathVariable long id, @Valid @RequestBody SaveProductRequest request){
+        ProductResponse product = productService.updateProduct(id, request);
 
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable long id){
-        Product product = productService.getProduct(id);
+    public ResponseEntity<ProductResponse> getProduct(@PathVariable long id){
+        ProductResponse product = productService.getProductResponse(id);
 
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
 
     @GetMapping
-    public ResponseEntity<Page<Product>> getProducts(@Valid GetProductsRequest request, Pageable pageable){
-        Page<Product> products = productService.getproducts(request, pageable);
+    public ResponseEntity<Page<ProductResponse>> getProducts(@Valid GetProductsRequest request, Pageable pageable){
+        Page<ProductResponse> products = productService.getProducts(request, pageable);
 
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
