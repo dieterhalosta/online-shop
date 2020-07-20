@@ -29,7 +29,7 @@ public class UserTestSteps {
 
         assertThat(user, notNullValue());
         assertThat(user.getId(), greaterThan(0L));
-        assertThat(user.getRole(), is(request.getRole().name()));
+        assertThat(user.getRole().name(), is(request.getRole().name()));
         assertThat(user.getFirstName(), is(request.getFirstName()));
         assertThat(user.getLastName(), is(request.getLastName()));
 

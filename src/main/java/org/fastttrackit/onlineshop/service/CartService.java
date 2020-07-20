@@ -3,14 +3,20 @@ package org.fastttrackit.onlineshop.service;
 import org.fastttrackit.onlineshop.domain.Cart;
 import org.fastttrackit.onlineshop.domain.Product;
 import org.fastttrackit.onlineshop.domain.User;
+import org.fastttrackit.onlineshop.exception.ResourceNotFoundException;
 import org.fastttrackit.onlineshop.persistance.CartRepository;
 import org.fastttrackit.onlineshop.transfer.cart.AddProductsToCartRequest;
+import org.fastttrackit.onlineshop.transfer.cart.CartResponse;
+import org.fastttrackit.onlineshop.transfer.cart.ProductInCartResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CartService {
@@ -49,5 +55,32 @@ public class CartService {
 
 
             cartRepository.save(cart);
+    }
+
+
+    @Transactional
+    public CartResponse getCart(long id){
+        LOGGER.info("Retrieving cart {}", id);
+
+        Cart cart = cartRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cart " + id + " does not exist"));
+
+        CartResponse cartResponse = new CartResponse();
+        cartResponse.setId(cart.getId());
+
+        List<ProductInCartResponse> productDtos = new ArrayList<>();
+
+        for(Product product : cart.getProducts()){
+            ProductInCartResponse productResponse = new ProductInCartResponse();
+            productResponse.setId(product.getId());
+            productResponse.setName(product.getName());
+            productResponse.setPrice(product.getPrice());
+            productResponse.setImageUrl(product.getImageUrl());
+            productDtos.add(productResponse);
+        }
+
+        cartResponse.setProducts(productDtos);
+
+        return cartResponse;
+
     }
 }

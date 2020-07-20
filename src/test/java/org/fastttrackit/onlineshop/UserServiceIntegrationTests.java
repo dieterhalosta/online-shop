@@ -64,7 +64,7 @@ public class UserServiceIntegrationTests {
     public void updateUser_whenExistingUser_thenReturnUpdatedUser(){
         User user =  userTestSteps.createUser();
         CreateUserRequest request = new CreateUserRequest();
-        request.setRole(UserRole.CUSTOMER);
+        request.setRole(UserRole.ADMIN);
         request.setFirstName("Test from Test");
         request.setLastName("LastNameTest");
 
