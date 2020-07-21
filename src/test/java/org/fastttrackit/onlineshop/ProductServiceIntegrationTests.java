@@ -79,7 +79,11 @@ class ProductServiceIntegrationTests {
         assertThat(productsPage, notNullValue());
         assertThat(productsPage.getTotalElements(), is(1L));
         assertThat(productsPage.getContent().get(0).getId(), is(product.getId()));
-        //To Do: Finish asserts
+        assertThat(productsPage.getContent().get(0).getName(), is(product.getName()));
+        assertThat(productsPage.getContent().get(0).getPrice(), is(product.getPrice()));
+        assertThat(productsPage.getContent().get(0).getQuantity(), is(product.getQuantity()));
+        assertThat(productsPage.getContent().get(0).getDescription(), is(product.getDescription()));
+        assertThat(productsPage.getContent().get(0).getImageUrl(), is(product.getImageUrl()));
 
     }
 

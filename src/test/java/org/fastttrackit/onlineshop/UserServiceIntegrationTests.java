@@ -7,6 +7,7 @@ import org.fastttrackit.onlineshop.service.UserService;
 import org.fastttrackit.onlineshop.steps.UserTestSteps;
 import org.fastttrackit.onlineshop.transfer.user.CreateUserRequest;
 import org.fastttrackit.onlineshop.transfer.user.GetUsersRequest;
+import org.fastttrackit.onlineshop.transfer.user.UserResponse;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
+import javax.validation.ConstraintViolationException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -36,50 +39,69 @@ public class UserServiceIntegrationTests {
     }
 
     @Test
+    void createUser_whenMissingManadatoryProperties_thenThrowException(){
+        CreateUserRequest request = new CreateUserRequest();
+
+        try {
+            userService.createUser(request);
+        } catch (Exception e) {
+            assertThat("Unexpected exception thrown.", e instanceof ConstraintViolationException);
+        }
+    }
+
+    @Test
     public void getUser_whenExistingUser_thenReturnUser(){
-        User user =  userTestSteps.createUser();
+        UserResponse user =  userTestSteps.createUser();
 
-        User userResponse = userService.getUser(user.getId());
+        UserResponse response = userService.getUserResponse(user.getId());
 
-        assertThat(userResponse, notNullValue());
-        assertThat(userResponse.getId(), is(user.getId()));
-        assertThat(userResponse.getRole(), is(user.getRole()));
-        assertThat(userResponse.getFirstName(), is(user.getFirstName()));
-        assertThat(userResponse.getLastName(), is(user.getLastName()));
+        assertThat(response, notNullValue());
+        assertThat(response.getId(), is(user.getId()));
+        assertThat(response.getRole(), is(user.getRole()));
+        assertThat(response.getFirstName(), is(user.getFirstName()));
+        assertThat(response.getLastName(), is(user.getLastName()));
+    }
+
+    @Test
+    void getUser_whenNonExistingUser_thenThrowResourcesNotFoundException(){
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> userService.getUserResponse(0));
     }
 
     @Test
     void getUsers_whenOneExistingUser_thenReturnPageOfOneUser(){
-        User user =  userTestSteps.createUser();
+        UserResponse user =  userTestSteps.createUser();
 
-        Page<User> usersPage = userService.getUsers(new GetUsersRequest(), PageRequest.of(0, 1000));
+        Page<UserResponse> usersPage = userService.getUsers(new GetUsersRequest(), PageRequest.of(0, 1000));
 
         assertThat(usersPage, CoreMatchers.notNullValue());
         assertThat(usersPage.getTotalElements(), greaterThanOrEqualTo(1L));
-        assertThat(usersPage.getContent(), contains(user));
+        assertThat(usersPage.getContent().get(0).getId(), is(user.getId()));
+        assertThat(usersPage.getContent().get(0).getRole(), is(user.getRole()));
+        assertThat(usersPage.getContent().get(0).getFirstName(), is(user.getFirstName()));
+        assertThat(usersPage.getContent().get(0).getLastName(), is(user.getLastName()));
 
     }
 
     @Test
     public void updateUser_whenExistingUser_thenReturnUpdatedUser(){
-        User user =  userTestSteps.createUser();
+        UserResponse user =  userTestSteps.createUser();
         CreateUserRequest request = new CreateUserRequest();
         request.setRole(UserRole.ADMIN);
         request.setFirstName("Test from Test");
         request.setLastName("LastNameTest");
 
-        User updatedUser = userService.updateUser(user.getId(), request);
+        UserResponse updatedUser = userService.updateUser(user.getId(), request);
 
         assertThat(updatedUser, CoreMatchers.notNullValue());
         assertThat(updatedUser.getId(), is(user.getId()));
-        assertThat(updatedUser.getRole().name(), is(request.getRole().name()));
+        assertThat(updatedUser.getRole(), is(request.getRole().name()));
         assertThat(updatedUser.getFirstName(), is(request.getFirstName()));
         assertThat(updatedUser.getLastName(), is(request.getLastName()));
     }
 
     @Test
     void deleteProduct_whenExistingRequest_thenProductDoesNotExistAnymore(){
-        User user =  userTestSteps.createUser();
+        UserResponse user =  userTestSteps.createUser();
 
         userService.deleteUser(user.getId());
 

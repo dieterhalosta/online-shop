@@ -8,6 +8,7 @@ import org.fastttrackit.onlineshop.steps.UserTestSteps;
 import org.fastttrackit.onlineshop.transfer.cart.AddProductsToCartRequest;
 import org.fastttrackit.onlineshop.transfer.cart.CartResponse;
 import org.fastttrackit.onlineshop.transfer.product.ProductResponse;
+import org.fastttrackit.onlineshop.transfer.user.UserResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,7 +37,7 @@ public class CartServiceIntegrationTests {
     @Test
     public void testAddProductsToCart_whenNewUser_thenCreateCartForUser(){
 
-        User user = userTestSteps.createUser();
+        UserResponse user = userTestSteps.createUser();
 
         ProductResponse product = productTestSteps.createProduct();
 

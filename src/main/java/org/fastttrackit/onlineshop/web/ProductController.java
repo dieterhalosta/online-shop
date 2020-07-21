@@ -1,7 +1,6 @@
 package org.fastttrackit.onlineshop.web;
 
 
-import org.fastttrackit.onlineshop.domain.Product;
 import org.fastttrackit.onlineshop.service.ProductService;
 import org.fastttrackit.onlineshop.transfer.product.GetProductsRequest;
 import org.fastttrackit.onlineshop.transfer.product.ProductResponse;

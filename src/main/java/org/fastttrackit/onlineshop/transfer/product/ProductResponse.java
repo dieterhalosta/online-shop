@@ -1,6 +1,5 @@
 package org.fastttrackit.onlineshop.transfer.product;
 
-import javax.validation.constraints.NotNull;
 
 public class ProductResponse {
 
