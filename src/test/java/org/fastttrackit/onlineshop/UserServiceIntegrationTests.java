@@ -39,7 +39,7 @@ public class UserServiceIntegrationTests {
     }
 
     @Test
-    void createUser_whenMissingManadatoryProperties_thenThrowException(){
+    void createUser_whenMissingMandatoryProperties_thenThrowException(){
         CreateUserRequest request = new CreateUserRequest();
 
         try {
