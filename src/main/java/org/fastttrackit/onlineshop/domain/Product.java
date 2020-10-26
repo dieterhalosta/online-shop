@@ -1,7 +1,5 @@
 package org.fastttrackit.onlineshop.domain;
 
-import org.hibernate.validator.constraints.Range;
-import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

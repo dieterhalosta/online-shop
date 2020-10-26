@@ -53,7 +53,7 @@ public class UserService {
     }
 
     public User getUser(long id) {
-        LOGGER.info("Retrieving product {}", id);
+        LOGGER.info("Retrieving user {}", id);
 
         return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User " + id + " not found"));
     }
