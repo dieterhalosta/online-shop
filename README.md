@@ -1,5 +1,5 @@
 # Online-Shop
-A simple electronic online shop back end app.
+A simple electronics online shop back end app.
 
 # Inspiration
 This project was build as part of the Java Bootcamp to learn Spring Boot, Hibernate Relationships and Database manipulation.
